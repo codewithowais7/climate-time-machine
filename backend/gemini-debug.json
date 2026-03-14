@@ -1,0 +1,30 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "```json\n{\"location\":\"Jaipur\",\"year\":2040,\"metric\":\"temperature\",\"answer\":\"Jaipur test.\"}\n```"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 33,
+    "candidatesTokenCount": 29,
+    "totalTokenCount": 91,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 33
+      }
+    ],
+    "thoughtsTokenCount": 29
+  },
+  "modelVersion": "gemini-2.5-flash",
+  "responseId": "zre1af2rJraKqfkP3peXuAw"
+}
