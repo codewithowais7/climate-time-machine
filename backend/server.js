@@ -7,12 +7,12 @@
 require('dotenv').config();
 
 const express = require('express');
-const cors    = require('cors');
+const cors = require('cors');
 
-const climateRoutes     = require('./routes/climate');
+const climateRoutes = require('./routes/climate');
 const climateDataRoutes = require('./routes/climateData');
-const locationRoutes    = require('./routes/location');
-const aiSearchRoutes    = require('./routes/aiSearch');
+const locationRoutes = require('./routes/location');
+const aiSearchRoutes = require('./routes/aiSearch');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -30,10 +30,10 @@ app.use(
 app.use(express.json());
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
-app.use('/api/climate',      climateRoutes);
+app.use('/api/climate', climateRoutes);
 app.use('/api/climate-data', climateDataRoutes);
-app.use('/api/location',     locationRoutes);
-app.use('/api/ai-search',    aiSearchRoutes);      // Phase 7: Gemini NL search
+app.use('/api/location', locationRoutes);
+app.use('/api/ai-search', aiSearchRoutes);      // Phase 7: Gemini NL search
 
 // ─── Health Check ─────────────────────────────────────────────────────────────
 // ─── Health Check ─────────────────────────────────────────────────────────────
