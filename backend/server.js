@@ -40,7 +40,10 @@ app.get('/', (req, res) => {
   res.json({
     message: '🌍 Climate Time Machine API is running',
     version: '1.0.0',
-    endpoints: ['/api/climate', '/api/location'],
+    endpoints: [
+      '/api/climate',
+      '/api/location',
+      '/api/ai-search'
   });
 });
 
