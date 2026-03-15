@@ -17,19 +17,21 @@ const QUICK_PICKS = [
   { name: 'Kolkata',   country: 'West Bengal, India',   lat: 22.5726, lon: 88.3639,  seed: 3  },
 ]
 
-// ─── Geocoding API call (via backend proxy) ─────────────────────────────────────
+// ─── Geocoding API call (Direct Open-Meteo) ─────────────────────────────────────
 async function fetchCityCoordinates(cityName) {
   const res = await fetch(
-    `/api/location/geocode?city=${encodeURIComponent(cityName)}`
+    `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=6&language=en&format=json`
   )
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}))
-    throw new Error(err.message || 'Geocoding service error')
+    throw new Error('Geocoding service error')
   }
   const data = await res.json()
-  // Clean display names without touching coordinates
+  
+  // Clean display names and map Open-Meteo keys to our app's keys
   return (data.results ?? []).map((loc) => ({
     ...loc,
+    lat: loc.latitude,
+    lon: loc.longitude,
     name: normalizeCityName(loc.name),
   }))
 }
