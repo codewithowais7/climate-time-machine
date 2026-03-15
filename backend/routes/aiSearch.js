@@ -11,21 +11,14 @@
  */
 
 const express = require('express')
-const router  = express.Router()
+const router = express.Router()
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY
-const GEMINI_BASE    = 'https://generativelanguage.googleapis.com/v1beta'
+const GEMINI_BASE = 'https://generativelanguage.googleapis.com/v1beta'
 
 // Priority list — we try these in order and use the first one that exists
 const MODEL_CANDIDATES = [
-  'gemini-2.5-flash-preview-05-20',
-  'gemini-2.5-flash-preview-04-17',
-  'gemini-2.5-flash-preview-12-19',
-  'gemini-2.5-flash',
-  'gemini-2.0-flash',
-  'gemini-2.0-flash-exp',
-  'gemini-1.5-flash',
-  'gemini-1.5-flash-latest',
+  "gemini-1.5-flash"
 ]
 
 // Cache the resolved model name so we only discover once
@@ -35,7 +28,7 @@ async function getModel() {
   if (resolvedModel) return resolvedModel
 
   try {
-    const res  = await fetch(`${GEMINI_BASE}/models?key=${GEMINI_API_KEY}`)
+    const res = await fetch(`${GEMINI_BASE}/models?key=${GEMINI_API_KEY}`)
     const data = await res.json()
     const available = new Set((data.models || []).map(m => m.name))
 
@@ -202,13 +195,13 @@ router.post('/', async (req, res) => {
 
     const url = `${GEMINI_BASE}/models/${model}:generateContent?key=${GEMINI_API_KEY}`
     const geminiRes = await fetch(url, {
-      method:  'POST',
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents: [{ parts: [{ text: buildPrompt(query.trim()) }] }],
         generationConfig: {
-          temperature:      0.1,
-          maxOutputTokens:  200,
+          temperature: 0.1,
+          maxOutputTokens: 200,
           responseMimeType: 'application/json',   // ← forces pure JSON, no markdown wrapping
         },
       }),
@@ -229,7 +222,7 @@ router.post('/', async (req, res) => {
     }
 
     const geminiJson = await geminiRes.json()
-    const rawText    = geminiJson?.candidates?.[0]?.content?.parts?.[0]?.text ?? ''
+    const rawText = geminiJson?.candidates?.[0]?.content?.parts?.[0]?.text ?? ''
 
     // ── Robust JSON extraction ────────────────────────────────────────────────
     // Gemini 2.5-flash returns: ```json\n{...}\n```
@@ -237,12 +230,12 @@ router.post('/', async (req, res) => {
 
     let stripped = rawText
       .replace(/^\s*```json\s*/i, '')   // remove opening fence + lang tag + whitespace
-      .replace(/\s*```\s*$/,    '')     // remove closing fence + whitespace
+      .replace(/\s*```\s*$/, '')     // remove closing fence + whitespace
       .trim()
 
     // Safety net: if there's still non-JSON preamble, slice from first { to last }
     const firstBrace = stripped.indexOf('{')
-    const lastBrace  = stripped.lastIndexOf('}')
+    const lastBrace = stripped.lastIndexOf('}')
     if (firstBrace > 0 && lastBrace > firstBrace) {
       stripped = stripped.slice(firstBrace, lastBrace + 1)
     }
@@ -259,13 +252,13 @@ router.post('/', async (req, res) => {
 
 
     const intent = typeof parsed.intent === 'string' ? parsed.intent.trim() : null
-    const city   = typeof parsed.city === 'string' ? parsed.city.trim() : null
-    
+    const city = typeof parsed.city === 'string' ? parsed.city.trim() : null
+
     let year = parseInt(parsed.year, 10)
     if (isNaN(year) || year < 1990 || year > 2050) year = null
 
     const riskLevel = typeof parsed.risk_level === 'string' ? parsed.risk_level.trim() : null
-    const summary   = typeof parsed.summary === 'string' ? parsed.summary.trim() : null
+    const summary = typeof parsed.summary === 'string' ? parsed.summary.trim() : null
 
     return res.json({ intent, city, year, risk_level: riskLevel, summary })
   } catch (err) {
