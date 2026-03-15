@@ -36,6 +36,7 @@ app.use('/api/location',     locationRoutes);
 app.use('/api/ai-search',    aiSearchRoutes);      // Phase 7: Gemini NL search
 
 // ─── Health Check ─────────────────────────────────────────────────────────────
+// ─── Health Check ─────────────────────────────────────────────────────────────
 app.get('/', (req, res) => {
   res.json({
     message: '🌍 Climate Time Machine API is running',
@@ -44,6 +45,7 @@ app.get('/', (req, res) => {
       '/api/climate',
       '/api/location',
       '/api/ai-search'
+    ]
   });
 });
 
