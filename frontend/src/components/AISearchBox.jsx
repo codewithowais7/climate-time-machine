@@ -62,18 +62,26 @@ export default function AISearchBox({ onLocationChange, onYearChange }) {
     setError(null)
 
     try {
-      const res  = await fetch('/api/ai-search', {
+      const API_URL = import.meta.env.VITE_API_URL || ''
+      
+      const res  = await fetch(`${API_URL}/api/ai-search`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ query: q }),
       })
-      const data = await res.json()
 
       if (!res.ok) {
-        setError(data.error ?? 'AI search failed. Please try again.')
-        return
+        let errorMsg = 'Backend request failed'
+        try {
+          const data = await res.json()
+          errorMsg = data.error ?? errorMsg
+        } catch (e) {
+          // If response isn't JSON, rely on the default errorMsg
+        }
+        throw new Error(errorMsg)
       }
 
+      const data = await res.json()
       setResult(data)
 
       // ── Drive dashboard state ──────────────────────────────────────────────
