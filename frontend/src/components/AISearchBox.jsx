@@ -90,7 +90,7 @@ export default function AISearchBox({ onLocationChange, onYearChange }) {
         onYearChange?.(data.year)            // moves time travel slider
       }
     } catch (err) {
-      setError('Network error. Make sure the backend is running.')
+      setError(err.message || 'Network error. Make sure the backend is running.')
       console.error('[AISearchBox]', err)
     } finally {
       setLoading(false)
