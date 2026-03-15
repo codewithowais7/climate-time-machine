@@ -62,9 +62,7 @@ export default function AISearchBox({ onLocationChange, onYearChange }) {
     setError(null)
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || ''
-      
-      const res  = await fetch(`${API_URL}/api/ai-search`, {
+      const res  = await fetch('https://climate-time-machine.onrender.com/api/ai-search', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ query: q }),
