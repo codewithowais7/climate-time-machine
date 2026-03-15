@@ -208,7 +208,7 @@ router.post('/', async (req, res) => {
         contents: [{ parts: [{ text: buildPrompt(query.trim()) }] }],
         generationConfig: {
           temperature: 0.1,
-          maxOutputTokens: 200,
+          maxOutputTokens: 1000,
           responseMimeType: 'application/json',   // ← forces pure JSON, no markdown wrapping
         },
       }),
@@ -240,10 +240,10 @@ router.post('/', async (req, res) => {
       .replace(/\s*```\s*$/, '')     // remove closing fence + whitespace
       .trim()
 
-    // Safety net: if there's still non-JSON preamble, slice from first { to last }
+    // Safety net: slice from first { to last } to ignore ANY leading/trailing conversational text
     const firstBrace = stripped.indexOf('{')
     const lastBrace = stripped.lastIndexOf('}')
-    if (firstBrace > 0 && lastBrace > firstBrace) {
+    if (firstBrace >= 0 && lastBrace > firstBrace) {
       stripped = stripped.slice(firstBrace, lastBrace + 1)
     }
 

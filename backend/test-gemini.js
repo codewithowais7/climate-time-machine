@@ -1,17 +1,17 @@
 require('dotenv').config()
 const fs = require('fs')
 
-const KEY  = process.env.GEMINI_API_KEY
+const KEY = process.env.GEMINI_API_KEY
 const BASE = 'https://generativelanguage.googleapis.com/v1beta'
 
 async function run() {
   // Step 1: Get all available flash models
-  const listRes  = await fetch(`${BASE}/models?key=${KEY}`)
+  const listRes = await fetch(`${BASE}/models?key=${KEY}`)
   const listData = await listRes.json()
   const flashModels = (listData.models || [])
     .map(m => m.name)
     .filter(n => n.toLowerCase().includes('flash'))
-  
+
   console.log('=== FLASH MODELS ===')
   flashModels.forEach(m => process.stdout.write(m + '\n'))
 
@@ -20,7 +20,7 @@ async function run() {
   // Step 2: Try first model WITHOUT responseMimeType
   const model = flashModels[0]
   console.log('\n=== TESTING:', model)
-  
+
   const res = await fetch(`${BASE}/${model}:generateContent?key=${KEY}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -32,7 +32,7 @@ async function run() {
 
   const raw = await res.text()
   console.log('\nHTTP:', res.status)
-  
+
   const j = JSON.parse(raw)
   const text = j?.candidates?.[0]?.content?.parts?.[0]?.text || ''
   console.log('\nEXTRACTED TEXT (repr):')
