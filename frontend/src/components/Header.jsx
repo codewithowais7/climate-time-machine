@@ -42,14 +42,6 @@ export default function Header() {
             <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
             <span className="text-xs text-emerald-400 font-medium">Live Data</span>
           </div>
-          <div className="flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-3 py-1">
-            <svg className="w-3 h-3 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 2L2 7l10 5 10-5-10-5z" />
-              <path d="M2 17l10 5 10-5" />
-              <path d="M2 12l10 5 10-5" />
-            </svg>
-            <span className="text-xs text-cyan-400 font-medium">Phase 6</span>
-          </div>
         </div>
 
       </div>

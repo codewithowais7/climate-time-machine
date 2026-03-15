@@ -122,8 +122,7 @@ export default function Dashboard({
         {/* ── Footer ──────────────────────────────────────────────── */}
         <footer className="text-center py-6 border-t border-white/5 text-xs text-gray-600">
           <p>
-            Climate Time Machine &nbsp;·&nbsp; IIT BHU Hack It Out Hackathon &nbsp;·&nbsp;
-            Data: Open-Meteo Archive (Phase 6) &nbsp;·&nbsp; India Focus
+            Climate Time Machine &nbsp;·&nbsp; IIT BHU Hack It Out Hackathon
           </p>
         </footer>
       </main>
