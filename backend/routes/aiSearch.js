@@ -18,7 +18,14 @@ const GEMINI_BASE = 'https://generativelanguage.googleapis.com/v1beta'
 
 // Priority list — we try these in order and use the first one that exists
 const MODEL_CANDIDATES = [
-  "gemini-2.5-flash"
+  'gemini-2.5-flash-preview-05-20',
+  'gemini-2.5-flash-preview-04-17',
+  'gemini-2.5-flash-preview-12-19',
+  'gemini-2.5-flash',
+  'gemini-2.0-flash',
+  'gemini-2.0-flash-exp',
+  'gemini-1.5-flash',
+  'gemini-1.5-flash-latest',
 ]
 
 // Cache the resolved model name so we only discover once
