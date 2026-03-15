@@ -7,23 +7,23 @@
 
 const MIN_YEAR = 1990
 const MAX_YEAR = 2050
-const TICKS    = [1990, 2000, 2010, 2020, 2030, 2040, 2050]
-const TODAY    = new Date().getFullYear()  // dynamic — never needs updating
+const TICKS = [1990, 2000, 2010, 2020, 2030, 2040, 2050]
+const TODAY = new Date().getFullYear()  // dynamic — never needs updating
 
 export default function TimeTravelSlider({ currentYear, onYearChange, trendLabel }) {
   const progress = ((currentYear - MIN_YEAR) / (MAX_YEAR - MIN_YEAR)) * 100
 
   // Era label: use real trendLabel from data when available, else time-based fallback
   const eraFallback =
-    currentYear <= 2000        ? { label: 'Pre-2000 Baseline',       color: 'text-blue-400',    bg: 'bg-blue-500/10'    }
-    : currentYear <= TODAY     ? { label: 'Present Day',              color: 'text-emerald-400', bg: 'bg-emerald-500/10' }
-    : currentYear <= TODAY+11  ? { label: 'Near-Future Forecast',     color: 'text-yellow-400',  bg: 'bg-yellow-500/10'  }
-    :                            { label: 'Long-Range Projection',     color: 'text-red-400',     bg: 'bg-red-500/10'     }
+    currentYear <= 2000 ? { label: 'Pre-2000 Baseline', color: 'text-blue-400', bg: 'bg-blue-500/10' }
+      : currentYear <= TODAY ? { label: 'Present Day', color: 'text-emerald-400', bg: 'bg-emerald-500/10' }
+        : currentYear <= TODAY + 11 ? { label: 'Near-Future Forecast', color: 'text-yellow-400', bg: 'bg-yellow-500/10' }
+          : { label: 'Long-Range Projection', color: 'text-red-400', bg: 'bg-red-500/10' }
 
   const TREND_ERA = {
-    'Warming Accelerates': { label: 'Warming Accelerates', color: 'text-red-400',     bg: 'bg-red-500/10'     },
-    'Warming Stable':      { label: 'Warming Stable',      color: 'text-yellow-400',  bg: 'bg-yellow-500/10'  },
-    'Warming Slowing':     { label: 'Warming Slowing',     color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+    'Warming Accelerates': { label: 'Warming Accelerates', color: 'text-red-400', bg: 'bg-red-500/10' },
+    'Warming Stable': { label: 'Warming Stable', color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
+    'Warming Slowing': { label: 'Warming Slowing', color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
   }
 
   const era = (trendLabel && TREND_ERA[trendLabel]) ? TREND_ERA[trendLabel] : eraFallback
@@ -55,8 +55,8 @@ export default function TimeTravelSlider({ currentYear, onYearChange, trendLabel
           {currentYear === TODAY
             ? 'Present day'
             : currentYear < TODAY
-            ? `${TODAY - currentYear} ${TODAY - currentYear === 1 ? 'year' : 'years'} in the past`
-            : `${currentYear - TODAY} ${currentYear - TODAY === 1 ? 'year' : 'years'} into the future`}
+              ? `${TODAY - currentYear} ${TODAY - currentYear === 1 ? 'year' : 'years'} in the past`
+              : `${currentYear - TODAY} ${currentYear - TODAY === 1 ? 'year' : 'years'} into the future`}
         </p>
       </div>
 
@@ -90,11 +90,10 @@ export default function TimeTravelSlider({ currentYear, onYearChange, trendLabel
             <button
               key={year}
               onClick={() => onYearChange(year)}
-              className={`text-xs font-mono transition-all duration-200 hover:text-cyan-400 ${
-                currentYear === year
-                  ? 'text-cyan-400 font-bold'
-                  : 'text-gray-600 hover:text-gray-400'
-              }`}
+              className={`text-xs font-mono transition-all duration-200 hover:text-cyan-400 ${currentYear === year
+                ? 'text-cyan-400 font-bold'
+                : 'text-gray-600 hover:text-gray-400'
+                }`}
             >
               {year}
             </button>
@@ -108,11 +107,10 @@ export default function TimeTravelSlider({ currentYear, onYearChange, trendLabel
           <button
             key={year}
             onClick={() => onYearChange(year)}
-            className={`flex-1 min-w-[60px] text-xs py-2 rounded-lg font-mono transition-all duration-200 ${
-              currentYear === year
-                ? 'bg-cyan-500 text-[#0a0f1e] font-bold shadow-glow'
-                : 'btn-secondary'
-            }`}
+            className={`flex-1 min-w-[60px] text-xs py-2 rounded-lg font-mono transition-all duration-200 ${currentYear === year
+              ? 'bg-cyan-500 text-[#0a0f1e] font-bold shadow-glow'
+              : 'btn-secondary'
+              }`}
           >
             {year}
           </button>
